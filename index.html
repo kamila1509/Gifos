@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en" color-mode="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Gifos</title>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <input type="checkbox" id="burger-shower" class="burger-shower">
+            <div class="header-navigation">
+                <div class="logo-container"></div>
+                <label for="burger-shower" class="hamburger"></label>
+                <div class="nav-full">
+                    <nav class="navigation">
+                        <ul class="navigation-list">
+                            <li class="color-mode_btn light--hidden"><a>Modo Diurno</a></li>
+                            <hr class="light--hidden">
+                            <li class="color-mode_btn dark--hidden"><a>Modo Nocturno</a></li>
+                            <hr class="dark--hidden">
+                            <li><a href="">Favoritos</a></li>
+                            <hr>
+                            <li><a href="">Mis GIFos</a></li>
+                            <hr>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </header>
+        <div id="content" class="content-container">
+            <!-- Home Content Template -->
+            <!-- <h1 class="main-title">Inspirate, busca, guarda y crea los mejores <span>GIFOS</span></h1>
+            <div class="search-container">
+                <div class="header-image-container">
+                    <img src="./assets/ilustra_header.svg" alt="">
+                </div>
+                <div class="search">
+                    <input placeholder="Buscar GIFOS Y más" type="text">
+                    <div class="image-container">
+                        <i class="fa fa-search"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="gifs-sections">
+                <span>Trending:</span>
+                <p>Reactions, Entertainment, Sports, Stickers, Artists </p>
+            </div>        -->
+
+            <!-- Favorite Template -->
+            <div class="center">
+                <img src="./assets/icon-favoritos.svg" alt="">
+                <h1 class="main-title">Favoritos</h1>
+            </div>
+            <div class="gifs-container">
+                <div class="gif-favorite">
+                    <img src="./assets/images/card-search.png" alt="">
+                </div>
+                <div class="gif-favorite">
+                    <img src="./assets/images/card-search.png" alt="">
+                </div>
+                <div class="gif-favorite">
+                    <img src="./assets/images/card-search.png" alt="">
+                </div>
+                <div class="gif-favorite">
+                    <img src="./assets/images/card-search.png" alt="">
+                </div>
+                <div class="gif-favorite">
+                    <img src="./assets/images/card-search.png" alt="">
+                </div>
+                <div class="gif-favorite">
+                    <img src="./assets/images/card-search.png" alt="">
+                </div>
+                <div class="gif-favorite">
+                    <img src="./assets/images/card-search.png" alt="">
+                </div>
+                <div class="gif-favorite">
+                    <img src="./assets/images/card-search.png" alt="">
+                </div><div class="gif-favorite">
+                    <img src="./assets/images/card-search.png" alt="">
+                </div>
+                <div class="gif-favorite">
+                    <img src="./assets/images/card-search.png" alt="">
+                </div>
+                <div class="gif-favorite">
+                    <img src="./assets/images/card-search.png" alt="">
+                </div><div class="gif-favorite">
+                    <img src="./assets/images/card-search.png" alt="">
+                </div>
+                <div class="gif-favorite">
+                    <img src="./assets/images/card-search.png" alt="">
+                </div>
+                <div class="gif-favorite">
+                    <img src="./assets/images/card-search.png" alt="">
+                </div>
+                <div class="gif-favorite">
+                    <img src="./assets/images/card-search.png" alt="">
+                </div>
+                <div class="gif-favorite">
+                    <img src="./assets/images/card-search.png" alt="">
+                </div>
+            </div>
+            <div class="button">
+                <a href="">Ver más</a>
+            </div>
+            
+
+        </div>
+        <div class="trending-container">
+            <h2 class="trending-title">Trending GIFOS</h2>
+            <p class="trending-description">Mira los últimos </p>
+            <p class="trending-description">GIFOS de nuestra comunidad</p>
+            <div class="slider-container">
+                <div class="slider__container-content">
+                    <div class="search-card">
+                        <img src="./assets/images/card-search.png" alt="">
+                    </div>
+                    <div class="search-card">
+                        <img src="./assets/images/card-search.png" alt="">
+                    </div>
+                    <div class="search-card">
+                        <img src="./assets/images/card-search.png" alt="">
+                    </div>
+                    <div class="search-card">
+                        <img src="./assets/images/card-search.png" alt="">
+                    </div>
+                    <div class="search-card">
+                        <img src="./assets/images/card-search.png" alt="">
+                    </div>
+                    <div class="search-card">
+                        <img src="./assets/images/card-search.png" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <div class="share-gifos">
+                <span>Compartir en:</span>
+                <ul class="social-media-list">
+                    <li><i class="fa fa-facebook"></i></li>
+                    <li><i class="fa fa-twitter"></i></li>
+                    <li><i class="fa fa-instagram"></i></li>
+                </ul>
+            </div>
+            <div class="rights-reserved">
+                © GIFOS 2020 All Rights Reserved.
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        async function getGif() {
+        let response = await fetch('https://api.giphy.com/v1/gifs/random?api_key=BweXb7lA7kb3AS78S2tG86HbJvAE99cL&tag=&rating=g', {
+            method: 'GET',
+        });
+        let result = await response.json();
+        document.getElementById("image").src = result.data.image_url
+        console.log(result);
+    }
+    </script>
+     <!-- <input type="button" value="GIF" onclick="getGif()">
+        <img id="image" src"" alt="">  -->
+<script src="main.js"></script>
+</body>
+</html>
