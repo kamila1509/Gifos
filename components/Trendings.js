@@ -8,8 +8,8 @@ async function init(){
         <p class="trending-description">GIFOS de nuestra comunidad</p>
         <div class="carrousel">
             <div class="carrousel-button left"><img src="../assets/button-left.svg" alt=""></div>
-            <div class="slider-container">
-                <div class="slider__container-content">
+            <div id="slider__container" class="slider-container">
+                <div id="slider__container-content" class="slider__container-content">
                     ${trendingGifData.data.map(gif => `
                         <div class="search-card">
                             <img src="${gif.images.original.url}" alt="">
@@ -22,24 +22,27 @@ async function init(){
     `;
     return trendingView
 }
-
-// function events() {
-//     const toggleColorMode = e => {
-//         if (e.currentTarget.classList.contains("right")){
-//             document.querySelector(".slider__container-content").
-//             return;
-//         }
-//             document.documentElement.setAttribute("color-mode","dark");
-//     };
-//     const toggleButtonsCarrousel = document.querySelectorAll(".carrousel-button");
-    
-//     toggleButtonsCarrousel.forEach( btn => {
-//         btn.addEventListener("click",toggleColorMode)
-//     }) 
-// };
+let scrollright = 0
+function events() {
+    const toggle = e => {
+        let carrousel =  document.getElementById("slider__container");
+        if (e.currentTarget.classList.contains("right")){
+            scrollright = scrollright+300;
+            carrousel.scroll(scrollright,0)
+            return;
+        }
+        scrollright = scrollright-300
+        carrousel.scroll(scrollright,0)
+    };
+    const toggleButtonsCarrousel = document.querySelectorAll(".carrousel-button"); 
+    toggleButtonsCarrousel.forEach( btn => {
+        btn.addEventListener("click",toggle)
+    }) 
+};
 
 async function createTrendingComponent(container){
     container.innerHTML = await init();
+    events();
 }
 
 export default {

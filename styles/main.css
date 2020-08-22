@@ -301,6 +301,10 @@ a.home-link {
     display: flex;
     width: 100%;
 }
+.carrousel-button.left,
+.carrousel-button.right {
+    display: none;
+}
 .carrousel-button ,
 .carrousel-button{
     flex: 1;
@@ -315,7 +319,12 @@ a.home-link {
     padding: 15px;
     top: 50%;
     position: absolute;
-
+}
+.carrousel-button.left {
+    padding-right: 20px;
+}
+.carrousel-button.right {
+    padding-left: 20px;
 }
 .carrousel-button.left >img{
     left: 50%;
@@ -328,6 +337,7 @@ a.home-link {
     width: 100%;
     flex: 3;
     overflow-x: scroll;
+    scroll-behavior: smooth;
     padding: 20px 0px;
     max-height: 350px;
 }
@@ -338,7 +348,6 @@ a.home-link {
     width: 100%;
     height: 100%;
     padding: 10px;
-    padding-left: 20px;
 }
 .search-card > img {
     height: 100%;
@@ -379,6 +388,13 @@ a.home-link {
 @media screen and (min-width: 768px) {
     .main-title {
         padding: 0 170px;
+    }
+    .carrousel-button.left,
+    .carrousel-button.right {
+        display: block;
+    }
+    .slider-container {
+        overflow: hidden;
     }
 }
 
