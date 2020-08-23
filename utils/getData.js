@@ -11,7 +11,17 @@ const getTrending = async (type, limit = 20) => {
 };
 
 const getSearch = async (type,limit = 20,searchText) => {
-    const apiURL = `${API}/${type}/?api_key=${API_KEY}&q=${searchText}&limit=${limit}&offset=0&rating=g&lang=en`
+    const apiURL = `${API}/${type}?api_key=${API_KEY}&q=${searchText}&limit=${limit}&offset=0&rating=g&lang=en`
+    try {
+        const response = await fetch(apiURL);
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.log('Fetch Error',error);
+    };
+}
+const getAutocomplete = async (tag) => {
+    const apiURL = `${API}/search/tags?api_key=${API_KEY}&q=${tag}`
     try {
         const response = await fetch(apiURL);
         const data = await response.json();
@@ -23,5 +33,6 @@ const getSearch = async (type,limit = 20,searchText) => {
 
 export default {
     getTrending,
-    getSearch
+    getSearch,
+    getAutocomplete
 }
