@@ -52,8 +52,8 @@ const Favorites = () =>{
                 <img src="./assets/images/card-search.png" alt="">
             </div>
         </div>
-        <div class="button">
-            <a href="">Ver más</a>
+        <div id="more-results" class="button">
+            Ver más
         </div> 
     `;
     return view;

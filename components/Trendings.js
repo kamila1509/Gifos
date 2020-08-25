@@ -2,22 +2,23 @@ import Trending from "../utils/getData.js";
 
 async function init(){
     const trendingGifData = await Trending.getTrending('trending',20);
+    console.log(trendingGifData.data);
     const trendingView = `
         <h2 class="trending-title">Trending GIFOS</h2>
         <p class="trending-description">Mira los últimos </p>
         <p class="trending-description">GIFOS de nuestra comunidad</p>
         <div class="carrousel">
-            <div class="carrousel-button left"><img src="../assets/button-left.svg" alt=""></div>
+            <div class="carrousel-button left"><i class="fa fa-chevron-left"></i></div>
             <div id="slider__container" class="slider-container">
                 <div id="slider__container-content" class="slider__container-content">
                     ${trendingGifData.data.map(gif => `
                         <div class="search-card">
-                            <img src="${gif.images.original.url}" alt="">
+                            <img src="${gif.images.fixed_width.url}" alt="">
                         </div>
                     `).join('')}
                 </div>
             </div>
-            <div class="carrousel-button right"><img src="../assets/button-right.svg" alt=""></div>
+            <div class="carrousel-button right"><i class="fa fa-chevron-right"></i></div>
         </div>
     `;
     return trendingView
