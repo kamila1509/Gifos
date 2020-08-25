@@ -1,0 +1,65 @@
+.card {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+}
+.card:hover{
+    background: rgb(87, 46, 229,0.6);
+    opacity: 1;
+}
+.gif-purple-hover {
+    position: relative;
+    z-index: 1;
+}
+.icons {
+    opacity: 0.5;
+    right: 0;
+    width: 32px;
+    height: 32px;
+    margin-left: 4px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: white;
+    border-radius: 6px;
+}
+.icons:hover {
+    opacity: 1;
+}
+.icon-heart {
+    background-image: url("../assets/icon-fav-hover.svg");
+}
+.icon-heart--active{
+    background-image: url("../assets/icon-fav-active.svg");;
+}
+.icon-download {
+    background-image: url("../assets/icon-download.svg");
+}
+.icon-max {
+    background-image: url("../assets/icon-max.svg");
+}
+.group-icons {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    display: flex;
+    justify-content: space-around;
+    width: fit-content;
+    
+}
+.gif-text-card {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-content: flex-end;
+    color: white;
+    text-align: left;
+    left: 15px;
+    bottom: 20px;
+}
+.gif-text-card > .text-card-title {
+    color: white;
+}

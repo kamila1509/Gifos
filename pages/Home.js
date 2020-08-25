@@ -49,14 +49,13 @@ const Home = () => {
         optionList.forEach( li => li.addEventListener("click",searchGifoSuggested))
         let search = document.getElementById('fa-search');
         search.addEventListener("click",searchText)
-
-        
     })
 }
 function searchText() {
     let search = document.getElementById('input-search');
     generateViewResults(search.value);
 }
+
 const searchGifoSuggested = async(e) => {
     let searchTitle = e.currentTarget.textContent
     let inputSearch = document.getElementById('input-search');
@@ -72,8 +71,19 @@ async function searchMoreResults(textSearch) {
     pag = pag + 12;
     const moreGifs = `
         ${searchResults.data.map(gif => `
-        <div class="gif-result">
-        <img src="${gif.images.fixed_width.url}" alt="${gif.title}">
+        <div class="gif-result gif-purple-hover ">
+        <img src="${gif.images.fixed_width.url}" alt="${gif.title}" loading="lazy">
+        <div class="card">
+            <div class="group-icons">
+                <div class="icons icon-heart"></div>
+                <div class="icons icon-download"></div>
+                <div class="icons icon-max"></div>
+            </div>
+            <div class="gif-text-card">
+                <div class="text-cart-user">User</div>
+                <h3 class="text-card-title">Titulo GIFOS</h3>
+            </div>
+        </div>
         </div>   
     `).join('')} 
     `;
@@ -91,8 +101,19 @@ async function generateViewResults (textSearch) {
         </div>
         <div id="gifs-container" class="gifs-container">
             ${searchResults.data.map(gif => `
-                <div class="gif-result">
-                <img src="${gif.images.fixed_width.url}" alt="${gif.title}">
+                <div class="gif-result gif-purple-hover ">
+                <img src="${gif.images.fixed_width.url}" alt="${gif.title}" >
+                <div class="card">
+                        <div class="group-icons">
+                            <div class="icons icon-heart"></div>
+                            <div class="icons icon-download"></div>
+                            <div class="icons icon-max"></div>
+                        </div>
+                        <div class="gif-text-card">
+                            <div class="text-cart-user">User</div>
+                            <h3 class="text-card-title">Titulo GIFOS</h3>
+                        </div>
+                    </div>
                 </div>   
             `).join('')}         
         </div>

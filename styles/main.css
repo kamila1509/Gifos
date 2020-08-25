@@ -129,6 +129,7 @@ li {
     border-top: 5px solid var(--border-gifos);
     position: fixed;
     width: 100%;
+    z-index: 999;
     background-color: var(--gifos-background);
     min-height: 80px;
 }
@@ -401,12 +402,12 @@ a.home-link {
 .slider__container-content {
     display: flex;
 }
-.search-card {
+.trending-card {
     width: 100%;
     height: 100%;
-    padding: 10px;
+    margin: 10px;
 }
-.search-card > img {
+.trending-card > img {
     height: 100%;
 }
 .footer {
