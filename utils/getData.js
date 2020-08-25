@@ -10,8 +10,9 @@ const getTrending = async (type, limit = 20) => {
     };
 };
 
-const getSearch = async (type,limit = 20,searchText) => {
-    const apiURL = `${API}/${type}?api_key=${API_KEY}&q=${searchText}&limit=${limit}&offset=0&rating=g&lang=en`
+const getSearch = async (type,limit = 20 ,searchText,pag) => {
+    const apiURL = `${API}/${type}?api_key=${API_KEY}&q=${searchText}&limit=${limit}&offset=${pag}&rating=g&lang=en`
+    console.log(apiURL);
     try {
         const response = await fetch(apiURL);
         const data = await response.json();

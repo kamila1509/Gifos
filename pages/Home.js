@@ -2,8 +2,6 @@ import Trendings from '../components/Trendings.js';
 import Data from '../utils/getData.js';
 
 const trendingContainer = null || document.getElementById('trending-container');
-
-
 const Home = () => {
     Trendings.createTrendingComponent(trendingContainer);
     const view = `
@@ -35,6 +33,7 @@ const Home = () => {
 };
  function searchAutocomplete() {
     const inputSearch = document.getElementById('input-search');
+    
     inputSearch.addEventListener("keyup", async (event) => {
         let suggestion = await Data.getAutocomplete(inputSearch.value);
         const list = document.getElementById('list-suggestions');
@@ -59,33 +58,46 @@ function searchText() {
     generateViewResults(search.value);
 }
 const searchGifoSuggested = async(e) => {
-    console.log(e.currentTarget);
     let searchTitle = e.currentTarget.textContent
     let inputSearch = document.getElementById('input-search');
     inputSearch.value = e.currentTarget.textContent;
     let list = document.getElementById('list-suggestions');
     list.innerHTML = '';
     generateViewResults(searchTitle);
-    console.log(generateViewResults(searchTitle));
+}
+
+let pag = 12 ;
+async function searchMoreResults(textSearch) {
+    let searchResults = await Data.getSearch('search',12,textSearch,pag);
+    pag = pag + 12;
+    const moreGifs = `
+        ${searchResults.data.map(gif => `
+        <div class="gif-result">
+        <img src="${gif.images.fixed_width.url}" alt="${gif.title}">
+        </div>   
+    `).join('')} 
+    `;
+    let gifsContainer = document.getElementById('gifs-container');
+    gifsContainer.insertAdjacentHTML('beforeend',moreGifs)
+
 }
 
 async function generateViewResults (textSearch) {
-    let searchResults = await Data.getSearch('search',12,textSearch);
-    console.log(searchResults.data.length);
+    let searchResults = await Data.getSearch('search',12,textSearch,0);
     let giftSection = document.getElementById('search-results');
     const viewGifs = `
         <div class="center">
         <h1 class="main-title">${textSearch}</h1>
         </div>
-        <div class="gifs-container">
+        <div id="gifs-container" class="gifs-container">
             ${searchResults.data.map(gif => `
                 <div class="gif-result">
-                <img src="${gif.images.original.url}" alt="${gif.title}">
+                <img src="${gif.images.fixed_width.url}" alt="${gif.title}">
                 </div>   
             `).join('')}         
         </div>
-        <div class="button">
-            <a href="">Ver más</a>
+        <div id="more-results" class="button">
+            Ver más
         </div> 
     `;
     const viewNoResults = `
@@ -93,17 +105,20 @@ async function generateViewResults (textSearch) {
         <h1 class="main-title">${textSearch}</h1>
         </div>
         <div class="gif-no-results">
-            <img src="./assets/icon-busqueda-sin-resultado.svg" alt="">
+            <img src="./assets/icon-busqueda-sin-resultado.svg" alt="No-results">
             <p>Intenta con otra búsqueda</p>
         </div>
     `;
     if( searchResults.data.length !== 0 ){
         giftSection.innerHTML = viewGifs
+        let moreResults = document.getElementById('more-results');
+        moreResults.addEventListener("click", function(){
+            searchMoreResults(textSearch);
+        })
     } else {
         giftSection.innerHTML = viewNoResults
     }
     
-
 }
 
 export default Home;
