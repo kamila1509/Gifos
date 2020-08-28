@@ -2,8 +2,7 @@ import Trending from "../utils/getData.js";
 import Card from "../components/Card.js";
 
 
-async function init(){
-    const trendingGifData = await Trending.getTrending('trending',20);
+function init(){
     const trendingView = `
         <h2 class="trending-title">Trending GIFOS</h2>
         <p class="trending-description">Mira los últimos </p>
@@ -12,10 +11,7 @@ async function init(){
             <div class="carrousel-button left"><i class="fa fa-chevron-left"></i></div>
             <div id="slider__container" class="slider-container">
                 <div id="slider__container-content" class="slider__container-content">
-                    ${trendingGifData.data.map( function(gif){
-                        let cart = Card.createCardComponent(gif)
-                        return cart
-                    }).join('')}
+                    
                 </div>
             </div>
             <div class="carrousel-button right"><i class="fa fa-chevron-right"></i></div>
@@ -41,9 +37,19 @@ function events() {
     }) 
 };
 
-async function createTrendingComponent(container){
-    container.innerHTML = await init();
+async function getTredingCards() {
+    const sliderContent = document.getElementById('slider__container-content')
+    const trendingGifData = await Trending.getTrending('trending',12);
+    trendingGifData.data.map( function(gif){
+        let cart = Card.createCardComponent(sliderContent,gif)
+        return cart
+    }).join('')
+}
+
+ function createTrendingComponent(container){
+    container.innerHTML =  init();
     events();
+    getTredingCards();
 }
 
 export default {

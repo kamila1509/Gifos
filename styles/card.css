@@ -14,6 +14,13 @@
     position: relative;
     z-index: 1;
 }
+.gif-card {
+    width: 100%;
+    height: 100%;
+}
+.gif-card > img {
+    height: 100%;
+}
 .icons {
     opacity: 0.5;
     right: 0;
@@ -32,13 +39,17 @@
     background-image: url("../assets/icon-fav-hover.svg");
 }
 .icon-heart--active{
-    background-image: url("../assets/icon-fav-active.svg");;
+    background-image: url("../assets/icon-fav-active.svg") !important;
 }
 .icon-download {
     background-image: url("../assets/icon-download.svg");
 }
 .icon-max {
     background-image: url("../assets/icon-max.svg");
+}
+.icon-delete {
+    background-image: url("../assets/icon_trash.svg");
+    visibility: hidden;
 }
 .group-icons {
     position: absolute;
@@ -62,4 +73,19 @@
 }
 .gif-text-card > .text-card-title {
     color: white;
+}
+.slider__container-content .gif-card {
+    margin: 10px;
+}
+.gif-favorite-section .gif-card > img {
+    width: 100%;
+    height: 100%;
+}
+.gifs-container-searchr-results .gif-card {
+    animation-duration: 2s;
+    animation-name: fade;
+}
+.gifs-container-search-results .gif-card > img{
+    width: 100%;
+    height: 100%;
 }
