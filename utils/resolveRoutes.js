@@ -3,8 +3,12 @@ const resolveRoutes = (route) => {
         let validRoute ='/favorites';
         return validRoute
     }
-    if(route.includes('episode/')){
-        let validRoute = '/episode/:id';
+    if(route.includes('mygifos')){
+        let validRoute = '/mygifos';
+        return validRoute
+    }
+    if(route.includes('newgifo')){
+        let validRoute = '/newgifo';
         return validRoute
     }
     else if(route.length <= 3){

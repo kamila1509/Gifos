@@ -1,10 +1,9 @@
 import Trendings from '../components/Trendings.js';
 import Data from '../utils/getData.js';
+import Card from "../components/Card.js"; 
 
 const trendingContainer = null || document.getElementById('trending-container');
-const Home = () => {
-    Trendings.createTrendingComponent(trendingContainer);
-    const view = `
+const viewHome = `
     <h1 id="main-title" class="main-title">Inspirate, busca, guarda y crea los mejores <span>GIFOS</span></h1>
             <div class="search-container">
                 <div class="header-image-container">
@@ -24,14 +23,9 @@ const Home = () => {
             <div id="search-results" class="gifs-sections">
                 <span>Trending:</span>
                 <p>Reactions, Entertainment, Sports, Stickers, Artists </p>
-            </div>
-    `;
-    setTimeout(()=>{
-        searchAutocomplete();
-    },200)
-    return view
-};
- function searchAutocomplete() {
+            </div>`;
+
+function searchAutocomplete() {
     const inputSearch = document.getElementById('input-search');
     
     inputSearch.addEventListener("keyup", async (event) => {
@@ -49,15 +43,14 @@ const Home = () => {
         optionList.forEach( li => li.addEventListener("click",searchGifoSuggested))
         let search = document.getElementById('fa-search');
         search.addEventListener("click",searchText)
-
-        
     })
 }
 function searchText() {
     let search = document.getElementById('input-search');
     generateViewResults(search.value);
 }
-const searchGifoSuggested = async(e) => {
+
+const searchGifoSuggested = (e) => {
     let searchTitle = e.currentTarget.textContent
     let inputSearch = document.getElementById('input-search');
     inputSearch.value = e.currentTarget.textContent;
@@ -70,16 +63,11 @@ let pag = 12 ;
 async function searchMoreResults(textSearch) {
     let searchResults = await Data.getSearch('search',12,textSearch,pag);
     pag = pag + 12;
-    const moreGifs = `
-        ${searchResults.data.map(gif => `
-        <div class="gif-result">
-        <img src="${gif.images.fixed_width.url}" alt="${gif.title}">
-        </div>   
-    `).join('')} 
-    `;
     let gifsContainer = document.getElementById('gifs-container');
-    gifsContainer.insertAdjacentHTML('beforeend',moreGifs)
-
+    searchResults.data.map( function(gif){
+        let cart = Card.createCardComponent(gifsContainer,gif)
+        return cart
+    }).join('')
 }
 
 async function generateViewResults (textSearch) {
@@ -89,12 +77,7 @@ async function generateViewResults (textSearch) {
         <div class="center">
         <h1 class="main-title">${textSearch}</h1>
         </div>
-        <div id="gifs-container" class="gifs-container">
-            ${searchResults.data.map(gif => `
-                <div class="gif-result">
-                <img src="${gif.images.fixed_width.url}" alt="${gif.title}">
-                </div>   
-            `).join('')}         
+        <div id="gifs-container" class="gifs-container gifs-container-search-results">           
         </div>
         <div id="more-results" class="button">
             Ver más
@@ -111,7 +94,12 @@ async function generateViewResults (textSearch) {
     `;
     if( searchResults.data.length !== 0 ){
         giftSection.innerHTML = viewGifs
-        let moreResults = document.getElementById('more-results');
+        let gifsContainer = document.getElementById('gifs-container')
+        searchResults.data.map( function(gif){
+            let cart = Card.createCardComponent(gifsContainer,gif)
+            return cart
+        }).join('')
+        let moreResults = document.getElementById('more-results')
         moreResults.addEventListener("click", function(){
             searchMoreResults(textSearch);
         })
@@ -120,5 +108,11 @@ async function generateViewResults (textSearch) {
     }
     
 }
-
-export default Home;
+function createComponent(container){
+    container.innerHTML = viewHome;
+    Trendings.createTrendingComponent(trendingContainer);
+    searchAutocomplete();
+}
+export default {
+    createComponent
+}

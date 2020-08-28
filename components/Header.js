@@ -12,8 +12,11 @@ const headerView = `
                     <hr class="dark--hidden">
                     <li><a href="#/favorites">Favoritos</a></li>
                     <hr>
-                    <li><a href="">Mis GIFos</a></li>
+                    <li><a href="#/mygifos">Mis GIFos</a></li>
                     <hr>
+                    <li class="onMobile"><a href="#/newgifo" >Create GIF</a></li>
+                    <hr class="onMobile">
+                    <li class="onDesktop"><a class="new-gif-link" href="#/newgifo">+</a></li>
                 </ul>
             </nav>
         </div>
@@ -25,10 +28,12 @@ function init() {
         if (e.currentTarget.classList.contains("light--hidden")){
             document.documentElement.setAttribute("color-mode","light");
             localStorage.setItem("color-mode", "light");
+            document.getElementsByTagName('meta')["theme-color"].content = "#572EE5";
             return;
         }
             localStorage.setItem("color-mode", "dark");
             document.documentElement.setAttribute("color-mode","dark");
+            document.getElementsByTagName('meta')["theme-color"].content = "#37383C";
     };
     const toggleColorButtons = document.querySelectorAll(".color-mode_btn");
     

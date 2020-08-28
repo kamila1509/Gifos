@@ -1,13 +1,16 @@
 import Header from '../components/Header.js';
-import Favorites from '../components/Favorites.js';
+import Favorites from '../pages/Favorites.js';
 import Home from '../pages/Home.js';
 import getHash from '../utils/getHash.js';
 import Error404 from '../pages/Error404.js';
+import NewGif from '../pages/NewGif.js';
 import resolveRoutes from '../utils/resolveRoutes.js';
 
 const routes = {
     '/':Home,
-    '/favorites':Favorites
+    '/favorites':Favorites,
+    '/mygifos':Error404,
+    '/newgifo':NewGif
 }
 
 const router = async () => {
@@ -17,6 +20,6 @@ const router = async () => {
     let hash = getHash();
     let route = await resolveRoutes(hash);
     let render = routes[route] ? routes[route] : Error404;
-    content.innerHTML = await render();
+    render.createComponent(content);
 }
 export default router;
