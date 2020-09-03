@@ -1,7 +1,8 @@
+import MaxGif from '../components/Maxgif.js'
 function init(gif){
     const cardView = `
-    <div class="gif-card gif-purple-hover">
-        <img src="${gif.images.fixed_width.url}" alt="${gif.title}">
+    <div id="${gif.id}" class="gif-card gif-purple-hover">
+        <img loading="lazy" src="${gif.images.fixed_width.webp}" alt="${gif.title}">
         <div class="card">
             <div class="group-icons">
                 <div id="${gif.id}-remove" class="icons icon-delete"></div>
@@ -29,16 +30,25 @@ function addtoFavorites(gif) {
     addToLocalStorage('Favorites',gif)
 }
 function removeFavorites(gif) {
-    console.log(`removed -${gif.title}`)
+    let data = JSON.parse(localStorage.getItem('Favorites'))
+    data.forEach((ítem,index) => ítem.id === gif.id ? data.splice(index,1): null)
+    localStorage.setItem('Favorites',JSON.stringify(data))
+    document.getElementById(gif.id).remove()
 }
 async function donwloadFavorites(gif){
     let a = document.createElement('a');
-    let response = await fetch(`${gif.images.downsized_still.url}`);
+    let response = await fetch(`${gif.images.fixed_height_small.mp4}`);
     let file = await response.blob();
     a.download = `${gif.title}`;
     a.href = window.URL.createObjectURL(file);
     a.dataset.downloadurl = ['application/octet-stream', a.download, a.href].join(':');
     a.click();
+}
+function fullScreenCard(gif){
+    let container = document.getElementById('main-container');
+    window.scrollTo(0,0);
+    MaxGif.createMaxCardComponent(container,gif);
+    document.body.style.overflow = 'hidden'
 }
 function events(gif){
     const toggleEvent = e => {
@@ -50,6 +60,9 @@ function events(gif){
         }
         if (e.currentTarget.id == `${gif.id}-download`){
             donwloadFavorites(gif);
+        }
+        if (e.currentTarget.id == `${gif.id}-max`){
+            fullScreenCard(gif);
         }
     };
     const handlerEventsForEacrhIcon = document.querySelectorAll(".icons");

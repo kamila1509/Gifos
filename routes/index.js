@@ -4,12 +4,13 @@ import Home from '../pages/Home.js';
 import getHash from '../utils/getHash.js';
 import Error404 from '../pages/Error404.js';
 import NewGif from '../pages/NewGif.js';
+import MyGifos from '../pages/MiGifos.js';
 import resolveRoutes from '../utils/resolveRoutes.js';
 
 const routes = {
     '/':Home,
     '/favorites':Favorites,
-    '/mygifos':Error404,
+    '/mygifos':MyGifos,
     '/newgifo':NewGif
 }
 
