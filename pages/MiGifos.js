@@ -1,17 +1,22 @@
-const Error404 = () =>{
-    const view = ` 
-        <div class="Error404">
-           <div class="morty-container">
-            <div class="morty">
-            ERROR 404
-            </div>
-            </div>
+
+import Trendings from '../components/Trendings.js';
+
+const trendingContainer = null || document.getElementById('trending-container');
+const viewMyGifs = `
+<div class="center">
+            <img src="./assets/icon-mis-gifos.svg" alt="">
+            <h1 class="main-title">Mis GIFOS</h1>
         </div>
-    `;
-    return view;
-};
+        <div id="favorite-gifs" class="gifs-container gif-favorite-section">
+            
+        </div>
+        <div id="more-results" class="button">
+            Ver más
+        </div> 
+`;
 function createComponent(container) {
-    container.innerHTML = Error404();
+    container.innerHTML = viewMyGifs;
+    Trendings.createTrendingComponent(trendingContainer)
 }
 export default {
     createComponent

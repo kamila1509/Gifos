@@ -15,6 +15,13 @@ h1,h2,h3 {
 li {
     list-style: none;
 }
+video {
+    width: 80%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
 :root[color-mode="light"] {
     --purple-gifos:#572EE5;
     --green-gifos:#50E3C2;
@@ -209,6 +216,8 @@ a.home-link {
     flex: 1;
     padding-right: 20px;
     padding-left: 20px;
+    animation-duration: 3s;
+    animation-name: fade;
 }
 .navigation-list> li {
     list-style: none;
@@ -484,6 +493,9 @@ a.home-link {
 }
 
 @media screen and (min-width: 1024px) {
+    video {
+        width: 90%;
+    }
     .onMobile {
         display: none;
     }

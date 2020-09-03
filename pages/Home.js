@@ -38,7 +38,12 @@ function searchAutocomplete() {
             `).join('')}
         </ul>
         `;
-        list.innerHTML = view
+        if(suggestion.data.length !== 0 ){
+            list.innerHTML = view
+        }else{
+            list.innerHTML = ''
+        }
+        
         const optionList = document.querySelectorAll(".option-list");
         optionList.forEach( li => li.addEventListener("click",searchGifoSuggested))
         let search = document.getElementById('fa-search');

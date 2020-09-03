@@ -1,15 +1,19 @@
 .new-gif-create-container{
     margin: 0 auto;
     padding: 10px;
-    background-color: white;
+    background-color: var(--gifos-background);
     border: 1px solid var(--purple-gifos);
     min-height: 250px;
     width: 90%;
+    min-height: 250px;
     max-width: 600px;
     position: relative;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    font-size: 14px;
+    animation-duration: 2s;
+    animation-name: fade;
 }
 .new-gifs-square{
     justify-content: space-between;
@@ -65,10 +69,13 @@
     padding: 5px 10px;
     margin: 0 10px;
 }
-.step:hover,
-.step--active{
+.step:hover{
     background-color: var(--purple-gifos);
     color: var(--gifos-background);
+}
+.step--active{
+    background-color: var(--purple-gifos)!important;
+    color: var(--gifos-background)!important;
 }
 .new-gif-line-divider{
     margin: 10px auto;
@@ -82,6 +89,12 @@
     margin: 0 auto;
     padding: 10px;
 }
+.new-gif-record-container .button {
+    padding: 15px 20px ;
+}
+.new-gif-record-container .no-display {
+    display: none;
+}
 .new-gifos-welcome-message {
     position: absolute;
     z-index: 2;
@@ -93,7 +106,7 @@
     transform: translate(-50%,-50%);
 }
 .new-gifos-welcome-message .main-title{
-    padding: 0px;
+    padding: 0px 10px;
 }
 .new-gifos-welcome-paragraph {
     color: var(--text);
