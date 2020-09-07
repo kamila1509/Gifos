@@ -43,7 +43,7 @@ function removeFavorites(gif) {
 }
 async function donwloadFavorites(gif){
     let a = document.createElement('a');
-    let response = await fetch(`${gif.images.fixed_height_small.mp4}`);
+    let response = await fetch(`${gif.images.original.mp4}`);
     let file = await response.blob();
     a.download = `${gif.title}`;
     a.href = window.URL.createObjectURL(file);

@@ -37,7 +37,7 @@ function removeFavorites(gif) {
 }
 async function donwloadFavorites(gif){
     let a = document.createElement('a');
-    let response = await fetch(`${gif.images.fixed_height_small.mp4}`);
+    let response = await fetch(`${gif.images.original.mp4}`);
     let file = await response.blob();
     a.download = `${gif.title}`;
     a.href = window.URL.createObjectURL(file);
@@ -69,10 +69,35 @@ function events(gif){
     handlerEventsForEacrhIcon.forEach( btn => {
         btn.addEventListener("click",toggleEvent)
     }) 
+    const cardMaxonMobile = document.getElementById(gif.id);
+    cardMaxonMobile.addEventListener("click",function(){
+        if(isMobile()){
+            fullScreenCard(gif)
+        }
+    })
+}
+
+function isMobile(){
+    return (
+        (navigator.userAgent.match(/Android/i)) ||
+        (navigator.userAgent.match(/webOS/i)) ||
+        (navigator.userAgent.match(/iPhone/i)) ||
+        (navigator.userAgent.match(/iPod/i)) ||
+        (navigator.userAgent.match(/iPad/i)) ||
+        (navigator.userAgent.match(/BlackBerry/i))
+    );
+}
+
+function hideControllers() {
+    if(isMobile()){
+        let card = document.querySelectorAll('.card');
+        card.forEach(item => item.style.display = 'none')
+    }
 }
 async function createCardComponent(container,gif){
     container.insertAdjacentHTML('beforeend',init(gif));
     events(gif);
+    hideControllers();
 }
 
 export default {
