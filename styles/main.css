@@ -18,6 +18,7 @@ li {
 video {
     width: 80%;
     position: absolute;
+    max-height: 300px;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
