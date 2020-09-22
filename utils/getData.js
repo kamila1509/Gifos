@@ -30,9 +30,32 @@ const getAutocomplete = async (tag) => {
         console.log('Fetch Error',error);
     };
 }
+const getRandomTrending = async () => {
+    const apiURL = `https://api.giphy.com/v1/trending/searches?api_key=${API_KEY}`
+    try{
+        const response = await fetch(apiURL)
+        const data = await response.json();
+        return data;
+    }catch (error) {
+        console.log('Fetch Error',error);
+    }
+}
+
+const getGifById = async (id) => {
+    const apiURL = `${API}/${id}?api_key=${API_KEY}`
+    try{
+        const response = await fetch(apiURL)
+        const data = await response.json();
+        return data;
+    }catch (error) {
+        console.log('Fetch Error',error);
+    }
+}
 
 export default {
     getTrending,
     getSearch,
-    getAutocomplete
+    getAutocomplete,
+    getRandomTrending,
+    getGifById
 }

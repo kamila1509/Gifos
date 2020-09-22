@@ -1,3 +1,4 @@
+import Data from '../utils/postData.js'
 const viewNewGif = `
 <div class="flex">
 <div class="flex-1 onDesktop film-camara">
@@ -36,6 +37,7 @@ const viewNewGif = `
                 <li id="step2" class="step">2</li>
                 <li id="step3"class="step">3</li>
                 <li id="time-capture" class="onDesktop capture-time">Repetir Captura</li>
+                <li id="timer" class="onDesktop capture-time timer"></li>
             </ul>
             
         </div>
@@ -44,7 +46,7 @@ const viewNewGif = `
             <div id="start" class="button">Comenzar</div>
             <div id="record" class="button no-display">Grabar</div>
             <div id="finish" class="button no-display">Finalizar</div>
-            <div id="upload" class="button no-display">Descargar Gifo</div>
+            <div id="upload" class="button no-display">Subir Gifo</div>
         </div>
     </div>
 </div>
@@ -61,8 +63,7 @@ const giveAccesToCamara = `
 `;
 
 function getStream () { 
-    document.getElementById('start').style.display = 'none';
-    document.getElementById('step1').classList.add('step--active')
+    firstStep();
     let video = document.createElement('video');
     let videoContainer= document.getElementById('video-container');
     videoContainer.innerHTML = giveAccesToCamara;
@@ -92,6 +93,7 @@ function getStream () {
             video.play();
             recorder.startRecording();
             thridStep();
+            timer(true)
         })
         let finish = document.getElementById('finish');
         let blob
@@ -101,27 +103,49 @@ function getStream () {
             });
             video.pause();
             fourStep();
+            timer(false);
         })
         let upload = document.getElementById('upload');
-        upload.addEventListener('click',function(){
-            invokeSaveAsDialog(blob);
+        upload.addEventListener('click',async function(){
+            //invokeSaveAsDialog(blob);
             fiveStep();
+            let form = new FormData();
+            form.append('file', blob, 'myGif.gif');
+            console.log(form.get('file'))
+            //await Data.postGif(form);
+            uploadGif(form);
+            
         })
 
     })
  }
+
+async function uploadGif (file) {
+    let postGif = await Data.postGif(file);
+    addToLocalStorage('MyGifs',postGif.data.id)
+}
+function addToLocalStorage(name,value) {
+    let existing =localStorage.getItem(name);
+    existing = existing ? JSON.parse(existing) : [];
+    existing.push(value);
+    localStorage.setItem(name,JSON.stringify(existing)); 
+}
 function fiveStep() {
     document.getElementById('step2').classList.remove('step--active')
     document.getElementById('step3').classList.add('step--active')
+    document.getElementById('time-capture').style.display = 'none';
 }
 function fourStep() {
     document.getElementById('finish').style.display = 'none';
-     document.getElementById('upload').style.display = 'block';
-
+    document.getElementById('upload').style.display = 'block';
+    document.getElementById('timer').style.display = 'none';
+    document.getElementById('time-capture').style.display = 'block';
 }
  function thridStep() {
-     document.getElementById('record').style.display = 'none';
-     document.getElementById('finish').style.display = 'block';
+    document.getElementById('record').style.display = 'none';
+    document.getElementById('time-capture').style.display = 'none';
+    document.getElementById('timer').style.display = 'block';
+    document.getElementById('finish').style.display = 'block';
  }
  function secondStep () {
     document.getElementById('video-title').remove();
@@ -130,7 +154,35 @@ function fourStep() {
     document.getElementById('step2').classList.add('step--active')
     document.getElementById('record').style.display = 'block';
  }
- 
+ function firstStep(){
+    document.getElementById('start').style.display = 'none';
+    document.getElementById('step1').classList.add('step--active')
+ }
+
+ function calculateTimeDuration(secs) {
+    let hr = Math.floor(secs / 3600);
+    let min = Math.floor((secs - (hr * 3600)) / 60);
+    let sec = Math.floor(secs - (hr * 3600) - (min * 60));
+    if (min < 10) {
+        min = "0" + min;
+    }
+    if (sec < 10) {
+        sec = "0" + sec;
+    }
+    return hr + ':' + min + ':' + sec;
+}
+
+function timer(recorder) {
+    let dateStarted = new Date().getTime();
+    let timer = document.getElementById('timer');
+    (function looper() {
+        if (!recorder) {
+            return;
+        }
+        timer.innerHTML = calculateTimeDuration((new Date().getTime() - dateStarted) / 1000);
+        setTimeout(looper, 1000);
+    })();
+}
 
 function events() {
     let start = document.getElementById('start');
@@ -138,12 +190,13 @@ function events() {
     let repeat = document.getElementById('time-capture');
     repeat.addEventListener('click',function(){
         document.getElementById('upload').style.display = 'none';
+        document.getElementById('step3').classList.remove('step--active')
         getStream();
     })
 
 }
 function createComponent(container) {
-    //document.getElementById('trending-container').remove()
+    document.getElementById('trending-container').style.visibility = "hidden";
     container.innerHTML = viewNewGif;
     events()
     

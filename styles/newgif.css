@@ -53,6 +53,9 @@
     text-transform: uppercase;
     font-size: 13px;
 }
+.capture-time.timer {
+    display: none;
+}
 .capture-time:hover{
     border-bottom: 2px solid var(--green-gifos);
 }
@@ -120,6 +123,7 @@
 }
 .movie {
     margin: auto 0 0 0;
+    animation: jump 2s infinite linear;
 }
 .movie img {
     height: fit-content;
@@ -142,12 +146,14 @@
     position: absolute;
     bottom: -8px;
     right: 80px;
+    animation: spin 2s infinite linear;
 }
 .record2{
     max-width: 65px;
     position: relative;
     bottom: -7px;
     right: 12px;
+    animation: spin 4s infinite linear;
 }
 .film-camara-body{
     display: flex;
@@ -164,6 +170,16 @@
     position: absolute;
     right: -34px;
     top: -38px;
+    animation: fade 2s infinite linear;
+}
+@keyframes spin {
+    from {transform:rotate(0deg);}
+    to {transform:rotate(360deg);}
+}
+@keyframes jump {
+    0%   {transform: translateY(0px);}
+  50%  {transform: translateY(-10px);}
+  100% {transform: translateY(0px);}
 }
 @media screen and (min-width: 768px) {
     .new-gif-create-container{
