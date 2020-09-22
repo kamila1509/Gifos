@@ -23,11 +23,11 @@ const viewNoResults = `
 function getFavoriteCards() {
     const favoriteContent = document.getElementById('favorite-gifs');
     const data = JSON.parse(localStorage.getItem('Favorites'))
+    console.log(data);
     const trendingGifData = data ? data : false
     if(!trendingGifData ){
         favoriteContent.innerHTML = viewNoResults
         favoriteContent.classList.remove('gifs-container');
-
     }else {
         trendingGifData.map( function(gif){
             let cart = Card.createCardComponent(favoriteContent,gif)
@@ -49,6 +49,7 @@ function createComponent(container){
     container.innerHTML = viewFavorites;
     getFavoriteCards();
     Trendings.createTrendingComponent(trendingContainer);
+    document.getElementById('trending-container').style.visibility = "visible";
     
 }
 

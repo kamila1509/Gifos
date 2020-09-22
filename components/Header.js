@@ -1,7 +1,8 @@
+import Search from '../components/Search.js';
 const headerView = `
     <input type="checkbox" id="burger-shower" class="burger-shower">
-    <div class="header-navigation">
-        <a class="home-link" href="#"><div class="logo-container"></div></a>
+    <div id="header-navigation" class="header-navigation">
+        <a id="home-link" class="home-link" href="#"><div class="logo-container"></div></a>
         <label for="burger-shower" class="hamburger"></label>
         <div class="nav-full">
             <nav class="navigation">
@@ -41,10 +42,54 @@ function init() {
         btn.addEventListener("click",toggleColorMode)
     }) 
 };
+function detectScroll() {
+    let header = document.getElementById('header-navigation');
+    document.addEventListener('scroll',function(){
+        if(window.scrollY >= 1){
+            header.classList.add("box-shadow-header");
+            //removeInputSearch(header)
+            insertSearch();
+            let search = header.children[1]
+            search.style.display = "block";
 
+        }else{
+            header.classList.remove('box-shadow-header');
+            let search = header.children[1]
+            search.style.display = "none";
+
+        }
+    })
+}
+//Check If there an existent input in the header 
+function insertSearch() {
+    let header = document.getElementById('header-navigation');
+    let SearchHeader = null || header.getElementsByClassName('search');
+    const home_link = document.getElementById('home-link');
+    if(SearchHeader.length < 1 && !isMobile()){
+        Search.createComponent(home_link)
+    }
+}
+// Function for remove input that is not necesary
+// function removeInputSearch(header){
+//     let remove = header.getElementsByClassName('search')[0]
+//     if(remove){
+//         remove.parentNode.removeChild(remove)
+//     }
+// }
+function isMobile(){
+    return (
+        (navigator.userAgent.match(/Android/i)) ||
+        (navigator.userAgent.match(/webOS/i)) ||
+        (navigator.userAgent.match(/iPhone/i)) ||
+        (navigator.userAgent.match(/iPod/i)) ||
+        (navigator.userAgent.match(/iPad/i)) ||
+        (navigator.userAgent.match(/BlackBerry/i))
+    );
+}
 function createComponent(container) {
     container.innerHTML = headerView;
     init();
+    detectScroll();
 }
 
 export default {

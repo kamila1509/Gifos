@@ -150,6 +150,17 @@ video {
     background-color: var(--gifos-background);
     min-height: 80px;
 }
+.box-shadow-header {
+    box-shadow: 0 2px 4px 1px rgba(156,175,195,0.55);
+}
+.header-navigation .search {
+    margin: auto;
+    max-width: 334px;
+    display: none;
+}
+.header-navigation .search .list-suggestions {
+    display: none;
+}
 .navigation-list li a.new-gif-link {
     color: var(--purple-gifos);
     border: 1px solid var(--purple-gifos);
@@ -213,10 +224,11 @@ a.home-link {
     align-content: center;
     justify-content: center;
     padding-bottom: 40px;
-    padding-top: 100px;
+    padding-top: 60px;
     flex: 1;
     padding-right: 20px;
     padding-left: 20px;
+    margin-top: 76px;
     animation-duration: 3s;
     animation-name: fade;
 }
@@ -315,6 +327,9 @@ a.home-link {
 }
 .list-suggestions > li > i {
     margin-right: 10px;
+}
+.trending-random .trend-suggest {
+    display: inline;
 }
 .gifs-container {
     grid-template-columns: repeat(2, 1fr);
@@ -508,6 +523,9 @@ a.home-link {
         justify-content: space-between;
         padding: 0 10%;
         width: 80%;
+    }
+    .header-navigation .search {
+        display: block;
     }
     .hamburger {
         display: none;

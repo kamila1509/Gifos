@@ -1,122 +1,44 @@
 import Trendings from '../components/Trendings.js';
+import Search from '../components/Search.js';
 import Data from '../utils/getData.js';
-import Card from "../components/Card.js"; 
 
 const trendingContainer = null || document.getElementById('trending-container');
 const viewHome = `
     <h1 id="main-title" class="main-title">Inspirate, busca, guarda y crea los mejores <span>GIFOS</span></h1>
             <div class="search-container">
-                <div class="header-image-container">
+                <div id="header-image-container" class="header-image-container">
                     <img src="./assets/ilustra_header.svg" alt="">
-                </div>
-                <div class="search">
-                    <div class="search-bar">
-                        <input id="input-search" class="search-input" placeholder="Buscar GIFOS Y más" type="text">
-                        <div class="image-container">
-                            <i id="fa-search" class="fa fa-search"></i>
-                        </div>
-                    </div>
-                    <div id="list-suggestions">
-                    </div>
                 </div>
             </div>
             <div id="search-results" class="gifs-sections">
                 <span>Trending:</span>
-                <p>Reactions, Entertainment, Sports, Stickers, Artists </p>
+                <ul id="trending-random" class="trending-random" >Reactions, Entertainment, Sports, Stickers, Artists </ul>
             </div>`;
 
-function searchAutocomplete() {
-    const inputSearch = document.getElementById('input-search');
-    
-    inputSearch.addEventListener("keyup", async (event) => {
-        let suggestion = await Data.getAutocomplete(inputSearch.value);
-        const list = document.getElementById('list-suggestions');
-        const view = `
-        <ul class="list-suggestions">
-            ${suggestion.data.map(item => `
-                <li class="option-list"><i class="fa fa-search"></i>${item.name}</li>
-            `).join('')}
-        </ul>
-        `;
-        if(suggestion.data.length !== 0 ){
-            list.innerHTML = view
-        }else{
-            list.innerHTML = ''
-        }
-        
-        const optionList = document.querySelectorAll(".option-list");
-        optionList.forEach( li => li.addEventListener("click",searchGifoSuggested))
-        let search = document.getElementById('fa-search');
-        search.addEventListener("click",searchText)
-    })
-}
-function searchText() {
-    let search = document.getElementById('input-search');
-    generateViewResults(search.value);
-}
-
-const searchGifoSuggested = (e) => {
-    let searchTitle = e.currentTarget.textContent
-    let inputSearch = document.getElementById('input-search');
-    inputSearch.value = e.currentTarget.textContent;
-    let list = document.getElementById('list-suggestions');
-    list.innerHTML = '';
-    generateViewResults(searchTitle);
-}
-
-let pag = 12 ;
-async function searchMoreResults(textSearch) {
-    let searchResults = await Data.getSearch('search',12,textSearch,pag);
-    pag = pag + 12;
-    let gifsContainer = document.getElementById('gifs-container');
-    searchResults.data.map( function(gif){
-        let cart = Card.createCardComponent(gifsContainer,gif)
-        return cart
-    }).join('')
-}
-
-async function generateViewResults (textSearch) {
-    let searchResults = await Data.getSearch('search',12,textSearch,0);
-    let giftSection = document.getElementById('search-results');
-    const viewGifs = `
-        <div class="center">
-        <h1 class="main-title">${textSearch}</h1>
-        </div>
-        <div id="gifs-container" class="gifs-container gifs-container-search-results">           
-        </div>
-        <div id="more-results" class="button">
-            Ver más
-        </div> 
-    `;
-    const viewNoResults = `
-        <div class="center">
-        <h1 class="main-title">${textSearch}</h1>
-        </div>
-        <div class="gif-no-results">
-            <img src="./assets/icon-busqueda-sin-resultado.svg" alt="No-results">
-            <p>Intenta con otra búsqueda</p>
-        </div>
-    `;
-    if( searchResults.data.length !== 0 ){
-        giftSection.innerHTML = viewGifs
-        let gifsContainer = document.getElementById('gifs-container')
-        searchResults.data.map( function(gif){
-            let cart = Card.createCardComponent(gifsContainer,gif)
-            return cart
-        }).join('')
-        let moreResults = document.getElementById('more-results')
-        moreResults.addEventListener("click", function(){
-            searchMoreResults(textSearch);
-        })
-    } else {
-        giftSection.innerHTML = viewNoResults
+async function trendingRandom () {
+    let trending = await Data.getRandomTrending();
+    console.log(trending);
+    let trendingSuggestions = document.getElementById('trending-random');
+    trendingSuggestions.innerHTML ='';
+    for (let i = 0; i <6; i++) {
+       trendingSuggestions.innerHTML += `<li class="trend-suggest">${trending.data[i]},</li>`
     }
-    
+    const trendSuggest = document.querySelectorAll(".trend-suggest");
+        trendSuggest.forEach( li => li.addEventListener("click", event => {
+            getTrendingSuggest(event)
+    }))
 }
+const getTrendingSuggest = (e) => {
+    let searchTitle = e.currentTarget.textContent
+    Search.generateViewResults(searchTitle);
+} 
 function createComponent(container){
     container.innerHTML = viewHome;
     Trendings.createTrendingComponent(trendingContainer);
-    searchAutocomplete();
+    document.getElementById('trending-container').style.visibility = "visible";
+    const headerImage = null || document.getElementById('header-image-container');
+    Search.createComponent(headerImage);
+    trendingRandom();
 }
 export default {
     createComponent
