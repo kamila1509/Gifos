@@ -24,15 +24,19 @@ const viewNoResults = `
 `;
 async function getFavoriteCards(data) {
     const miGifContent = document.getElementById('mygifos-gifs');
+    let removeMoreResults =document.getElementById('more-results');
     const myGifData = data ? data : false
     if(!myGifData){
+        removeMoreResults.style.visibility = "hidden";
         miGifContent.innerHTML = viewNoResults
         miGifContent.classList.remove('gifs-container');
+        
     }else {
         myGifData.map(function(gif){
             let cart = Card.createCardComponent(miGifContent,gif)
             return cart
         }).join('')
+        removeMoreResults.style.visibility = "visible";
     }
     let removeFavoriteIcon = document.querySelectorAll('#mygifos-gifs .icon-heart');
     removeFavoriteIcon.forEach(btn => 

@@ -1,12 +1,9 @@
 const Error404 = () =>{
     const view = ` 
-        <div class="Error404">
-           <div class="morty-container">
-            <div class="morty">
-            ERROR 404
-            </div>
-            </div>
-        </div>
+    <div class="gif-no-results">
+        <img src="./assets/icon-busqueda-sin-resultado.svg" alt="No-results">
+        <p class="gif-no-results-text">Try Another Page</p>
+    </div>
     `;
     return view;
 };

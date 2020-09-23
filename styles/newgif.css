@@ -44,14 +44,15 @@
     max-width: 640px;
 }
 .capture-time {
-    position: absolute;
     color: var(--purple-gifos);
     right: 10px;
     top: 50%;
-    transform: translateY(-50%);
     font-weight: 600;
     text-transform: uppercase;
-    font-size: 13px;
+    font-size: 11px;
+    justify-content: center;
+    align-items: center;
+    margin-left: 20px;
 }
 .capture-time.timer {
     display: none;
@@ -172,6 +173,26 @@
     top: -38px;
     animation: fade 2s infinite linear;
 }
+.video-animation {
+    background: rgb(87, 46, 229,0.6);
+    opacity: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.video-loader {
+    margin-bottom: 10px;
+}
+.video-loader-animation{
+    animation: spin 2s infinite linear;
+}
+.video-text-loading {
+    font-size: 15px;
+    color: #FFFFFF;
+    text-align: center;
+    font-weight: 600;
+}
 @keyframes spin {
     from {transform:rotate(0deg);}
     to {transform:rotate(360deg);}
@@ -184,6 +205,12 @@
 @media screen and (min-width: 768px) {
     .new-gif-create-container{
         min-height: 400px;
+    }
+    .capture-time{
+        position: absolute;
+        transform: translateY(-50%);
+        margin-left: 0px;
+        font-size: 13px;
     }
 
 }

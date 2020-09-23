@@ -1,4 +1,5 @@
 import Data from '../utils/postData.js'
+import getHash from '../utils/getHash.js';
 const viewNewGif = `
 <div class="flex">
 <div class="flex-1 onDesktop film-camara">
@@ -112,7 +113,6 @@ function getStream () {
             let form = new FormData();
             form.append('file', blob, 'myGif.gif');
             console.log(form.get('file'))
-            //await Data.postGif(form);
             uploadGif(form);
             
         })
@@ -121,8 +121,28 @@ function getStream () {
  }
 
 async function uploadGif (file) {
+    createLoadingAnimation();
     let postGif = await Data.postGif(file);
     addToLocalStorage('MyGifs',postGif.data.id)
+    changetoSuccessAnimation();
+}
+function changetoSuccessAnimation(){
+    document.getElementById('video-loader').src ="./assets/ok.svg";
+    document.getElementById('video-loader').classList.remove('video-loader-animation');
+    document.getElementById('video-text-loader').textContent= "GIFO subido con éxito";
+}
+function createLoadingAnimation() {
+    document.getElementById('upload').style.display = 'none';
+    let videoUploadAnimation = document.createElement('div');
+    let heightVideo = document.getElementsByTagName('video')[0].offsetHeight;
+    let widthVideo = document.getElementsByTagName('video')[0].offsetWidth;
+    videoUploadAnimation.style.height =`${heightVideo}px`;
+    videoUploadAnimation.style.width =`${widthVideo}px`;
+    videoUploadAnimation.id = "video-animation";
+    videoUploadAnimation.className="video video-animation";
+    videoUploadAnimation.innerHTML= `<img id="video-loader" class="video-loader video-loader-animation" src="./assets/loader.svg"> <p id="video-text-loader" class="video-text-loading">Estamos Subiendo tu GIFO </p>`;
+    let videoContainer= document.getElementById('video-container');
+    videoContainer.appendChild(videoUploadAnimation);
 }
 function addToLocalStorage(name,value) {
     let existing =localStorage.getItem(name);
@@ -139,12 +159,12 @@ function fourStep() {
     document.getElementById('finish').style.display = 'none';
     document.getElementById('upload').style.display = 'block';
     document.getElementById('timer').style.display = 'none';
-    document.getElementById('time-capture').style.display = 'block';
+    document.getElementById('time-capture').style.display = 'flex';
 }
  function thridStep() {
     document.getElementById('record').style.display = 'none';
     document.getElementById('time-capture').style.display = 'none';
-    document.getElementById('timer').style.display = 'block';
+    document.getElementById('timer').style.display = 'flex';
     document.getElementById('finish').style.display = 'block';
  }
  function secondStep () {
@@ -195,6 +215,7 @@ function events() {
     })
 
 }
+
 function createComponent(container) {
     container.innerHTML = viewNewGif;
     events()

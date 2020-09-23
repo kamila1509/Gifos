@@ -22,5 +22,15 @@ const router = async () => {
     let route = await resolveRoutes(hash);
     let render = routes[route] ? routes[route] : Error404;
     render.createComponent(content);
+    removeTrendingContainer();
+}
+function removeTrendingContainer(){
+    let hash = getHash();
+    const trendingContainer = null || document.getElementById('trending-container');
+    if( hash === 'newgifo'){
+        trendingContainer.style.display="none";
+    }else{
+        trendingContainer.style.display="flex";
+    }
 }
 export default router;

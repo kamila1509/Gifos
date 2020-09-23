@@ -24,15 +24,18 @@ const viewNoResults = `
 function getFavoriteCards() {
     const favoriteContent = document.getElementById('favorite-gifs');
     const data = JSON.parse(localStorage.getItem('Favorites'))
-    const trendingGifData = data ? data : false
-    if(!trendingGifData ){
+    let removeMoreResults =document.getElementById('more-results');
+    const favoriteGifData = data ? data : false
+    if(!favoriteGifData ){
         favoriteContent.innerHTML = viewNoResults
         favoriteContent.classList.remove('gifs-container');
+        removeMoreResults.style.visibility = "hidden";
     }else {
-        trendingGifData.map( function(gif){
+        favoriteGifData.map( function(gif){
             let cart = Card.createCardComponent(favoriteContent,gif)
             return cart
         }).join('')
+        removeMoreResults.style.visibility = "visible";
     }
     let removeFavoriteIcon = document.querySelectorAll('#favorite-gifs .icon-heart');
     removeFavoriteIcon.forEach(btn => 
