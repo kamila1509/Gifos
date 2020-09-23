@@ -16,23 +16,26 @@ const viewFavorites = `
 
 const viewNoResults = `
     <div class="gif-no-results">
-        <img src="./assets/icon-busqueda-sin-resultado.svg" alt="No-results">
-        <p class="gif-no-results-text">Intenta con otra búsqueda</p>
+        <img src="./assets/icon-fav-sin-contenido.svg" alt="No-results">
+        <p class="gif-no-results-text">"¡Guarda tu primer GIFO en Favoritos <br>
+        para que se muestre aquí!"</p>
     </div>
 `;
 function getFavoriteCards() {
     const favoriteContent = document.getElementById('favorite-gifs');
     const data = JSON.parse(localStorage.getItem('Favorites'))
-    console.log(data);
-    const trendingGifData = data ? data : false
-    if(!trendingGifData ){
+    let removeMoreResults =document.getElementById('more-results');
+    const favoriteGifData = data ? data : false
+    if(!favoriteGifData ){
         favoriteContent.innerHTML = viewNoResults
         favoriteContent.classList.remove('gifs-container');
+        removeMoreResults.style.visibility = "hidden";
     }else {
-        trendingGifData.map( function(gif){
+        favoriteGifData.map( function(gif){
             let cart = Card.createCardComponent(favoriteContent,gif)
             return cart
         }).join('')
+        removeMoreResults.style.visibility = "visible";
     }
     let removeFavoriteIcon = document.querySelectorAll('#favorite-gifs .icon-heart');
     removeFavoriteIcon.forEach(btn => 

@@ -49,12 +49,12 @@ function detectScroll() {
             header.classList.add("box-shadow-header");
             //removeInputSearch(header)
             insertSearch();
-            let search = header.children[1]
+            let search = header.getElementsByClassName('search')[0]
             search.style.display = "block";
 
         }else{
             header.classList.remove('box-shadow-header');
-            let search = header.children[1]
+            let search = header.getElementsByClassName('search')[0]
             search.style.display = "none";
 
         }
@@ -65,7 +65,7 @@ function insertSearch() {
     let header = document.getElementById('header-navigation');
     let SearchHeader = null || header.getElementsByClassName('search');
     const home_link = document.getElementById('home-link');
-    if(SearchHeader.length < 1 && !isMobile()){
+    if(SearchHeader.length < 1 ){
         Search.createComponent(home_link)
     }
 }

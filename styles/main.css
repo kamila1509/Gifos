@@ -15,7 +15,7 @@ h1,h2,h3 {
 li {
     list-style: none;
 }
-video {
+video , .video{
     width: 80%;
     position: absolute;
     max-height: 300px;
@@ -156,7 +156,8 @@ video {
 .header-navigation .search {
     margin: auto;
     max-width: 334px;
-    display: none;
+    visibility: hidden;
+    height: 0px;
 }
 .header-navigation .search .list-suggestions {
     display: none;
@@ -388,6 +389,7 @@ a.home-link {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
 }
 .trending-title {
     margin-bottom: 10px;
@@ -492,7 +494,6 @@ a.home-link {
     }
   }
 @media screen and (min-width: 768px) {
-    
     .main-title {
         margin: 0 auto;
     }
@@ -526,6 +527,8 @@ a.home-link {
     }
     .header-navigation .search {
         display: block;
+        visibility: visible;
+        height: fit-content;
     }
     .hamburger {
         display: none;
@@ -558,6 +561,12 @@ a.home-link {
     }
     .navigation-list > hr {
         display: none;
+    }
+    .trending-container {
+        min-height: 640px;
+    }
+    .content-container {
+        padding-top: 100px;
     }
     .gifs-container {
         grid-template-columns: repeat(4, 1fr);

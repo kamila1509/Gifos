@@ -3,7 +3,7 @@ import Card from "../components/Card.js";
 
 function viewSearch (uniqueId) {
     return `
-    <div id="search-${uniqueId}" class="search onDesktop">
+    <div id="search-${uniqueId}" class="search">
     <div class="search-bar">
         <input id="input-search-${uniqueId}" class="search-input" placeholder="Buscar GIFOS Y más" type="text">
         <div class="image-container">
