@@ -18,14 +18,12 @@ const viewMyGifs = `
 `;
 const viewNoResults = `
     <div class="gif-no-results">
-        <img src="./assets/icon-busqueda-sin-resultado.svg" alt="No-results">
-        <p class="gif-no-results-text">Intenta con otra búsqueda</p>
+        <img src="./assets/icon-mis-gifos-sin-contenido.svg" alt="No-results">
+        <p class="gif-no-results-text">¡Animate a crear tu primer GIFO!</p>
     </div>
 `;
 async function getFavoriteCards(data) {
     const miGifContent = document.getElementById('mygifos-gifs');
-    console.log(data);
-    // const data = JSON.parse(localStorage.getItem('MyGifs'))
     const myGifData = data ? data : false
     if(!myGifData){
         miGifContent.innerHTML = viewNoResults
@@ -47,19 +45,22 @@ async function getFavoriteCards(data) {
     
 }
 function getMyGifosData() {
-    const dataGif = [];
+    let dataGif = [];
     const data = JSON.parse(localStorage.getItem('MyGifs'));
-    data.map(async function(id){
-        let gifid = await Data.getGifById(id);
-        dataGif.push(gifid.data);
-    });
+    if(data){
+        data.map(async function(id){
+            let gifid = await Data.getGifById(id);
+            dataGif.push(gifid.data);
+        });
+    }else {
+        dataGif = null
+    }
     return dataGif
 }
 function createComponent(container) {
     container.innerHTML = viewMyGifs;
     let data = getMyGifosData();
     Trendings.createTrendingComponent(trendingContainer)
-    document.getElementById('trending-container').style.visibility = "visible";
     setTimeout(()=>{
         getFavoriteCards(data)
     },500)

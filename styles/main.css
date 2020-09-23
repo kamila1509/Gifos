@@ -156,7 +156,8 @@ video {
 .header-navigation .search {
     margin: auto;
     max-width: 334px;
-    display: none;
+    visibility: hidden;
+    height: 0px;
 }
 .header-navigation .search .list-suggestions {
     display: none;
@@ -526,6 +527,8 @@ a.home-link {
     }
     .header-navigation .search {
         display: block;
+        visibility: visible;
+        height: fit-content;
     }
     .hamburger {
         display: none;

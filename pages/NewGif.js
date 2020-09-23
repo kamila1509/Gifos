@@ -196,7 +196,6 @@ function events() {
 
 }
 function createComponent(container) {
-    document.getElementById('trending-container').style.visibility = "hidden";
     container.innerHTML = viewNewGif;
     events()
     

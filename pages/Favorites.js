@@ -16,14 +16,14 @@ const viewFavorites = `
 
 const viewNoResults = `
     <div class="gif-no-results">
-        <img src="./assets/icon-busqueda-sin-resultado.svg" alt="No-results">
-        <p class="gif-no-results-text">Intenta con otra búsqueda</p>
+        <img src="./assets/icon-fav-sin-contenido.svg" alt="No-results">
+        <p class="gif-no-results-text">"¡Guarda tu primer GIFO en Favoritos <br>
+        para que se muestre aquí!"</p>
     </div>
 `;
 function getFavoriteCards() {
     const favoriteContent = document.getElementById('favorite-gifs');
     const data = JSON.parse(localStorage.getItem('Favorites'))
-    console.log(data);
     const trendingGifData = data ? data : false
     if(!trendingGifData ){
         favoriteContent.innerHTML = viewNoResults

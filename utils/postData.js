@@ -9,7 +9,6 @@ const postGif = async (file) => {
         }
         const response = await fetch(apiURL,OtherParam);
         const data = await response.json();
-        console.log(data);
         return data;
     } catch (error) {
         console.log('Fetch Error',error);

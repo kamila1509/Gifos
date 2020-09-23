@@ -17,7 +17,6 @@ const viewHome = `
 
 async function trendingRandom () {
     let trending = await Data.getRandomTrending();
-    console.log(trending);
     let trendingSuggestions = document.getElementById('trending-random');
     trendingSuggestions.innerHTML ='';
     for (let i = 0; i <6; i++) {
