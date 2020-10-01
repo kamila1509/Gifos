@@ -1,4 +1,4 @@
-import Search from '../components/Search.js';
+import Search from './Search.js';
 const headerView = `
     <input type="checkbox" id="burger-shower" class="burger-shower">
     <div id="header-navigation" class="header-navigation">
@@ -47,16 +47,18 @@ function detectScroll() {
     document.addEventListener('scroll',function(){
         if(window.scrollY >= 1){
             header.classList.add("box-shadow-header");
-            //removeInputSearch(header)
             insertSearch();
             let search = header.getElementsByClassName('search')[0]
-            search.style.display = "block";
+            if(search){
+                search.style.display = "block";
+            }
 
         }else{
             header.classList.remove('box-shadow-header');
             let search = header.getElementsByClassName('search')[0]
-            search.style.display = "none";
-
+            if(search){
+                search.style.display = "none";
+            }
         }
     })
 }
@@ -69,23 +71,7 @@ function insertSearch() {
         Search.createComponent(home_link)
     }
 }
-// Function for remove input that is not necesary
-// function removeInputSearch(header){
-//     let remove = header.getElementsByClassName('search')[0]
-//     if(remove){
-//         remove.parentNode.removeChild(remove)
-//     }
-// }
-function isMobile(){
-    return (
-        (navigator.userAgent.match(/Android/i)) ||
-        (navigator.userAgent.match(/webOS/i)) ||
-        (navigator.userAgent.match(/iPhone/i)) ||
-        (navigator.userAgent.match(/iPod/i)) ||
-        (navigator.userAgent.match(/iPad/i)) ||
-        (navigator.userAgent.match(/BlackBerry/i))
-    );
-}
+
 function createComponent(container) {
     container.innerHTML = headerView;
     init();

@@ -1,5 +1,5 @@
 import Data from '../utils/getData.js';
-import Card from "../components/Card.js";
+import Card from "./Card.js";
 
 function viewSearch (uniqueId) {
     return `
@@ -8,6 +8,7 @@ function viewSearch (uniqueId) {
         <input id="input-search-${uniqueId}" class="search-input" placeholder="Buscar GIFOS Y más" type="text">
         <div class="image-container">
             <i id="fa-search-${uniqueId}" class="fa fa-search"></i>
+            <i id="fa-close-${uniqueId}" class="fa fa-close search-close"></i>
         </div>
     </div>
     <div id="list-suggestions-${uniqueId}">
@@ -17,8 +18,12 @@ function viewSearch (uniqueId) {
 }
 function searchAutocomplete(uniqueId) {
     const inputSearch = document.getElementById(`input-search-${uniqueId}`);
-    
+    const clear = document.getElementById(`fa-close-${uniqueId}`);
+    const search = document.getElementById(`fa-search-${uniqueId}`);
     inputSearch.addEventListener("keyup", async (event) => {
+        if(event.key === 'Enter'){
+            searchText(uniqueId);
+        }
         let suggestion = await Data.getAutocomplete(inputSearch.value);
         const list = document.getElementById(`list-suggestions-${uniqueId}`);
         const view = `
@@ -29,18 +34,27 @@ function searchAutocomplete(uniqueId) {
         </ul>
         `;
         if(suggestion.data.length !== 0 ){
+            search.style.display = "none";
+            clear.style.display = "block";
             list.innerHTML = view
         }else{
             list.innerHTML = ''
+            clear.style.display = "none";
+            search.style.display = "block";
         }
         
         const optionList = document.querySelectorAll(".option-list");
         optionList.forEach( li => li.addEventListener("click", event => {
             searchGifoSuggested(event, uniqueId)
         }))
-        let search = document.getElementById(`fa-search-${uniqueId}`);
         search.addEventListener("click", () => {
             searchText(uniqueId)
+        })
+        clear.addEventListener("click", () => {
+            inputSearch.value = ''
+            list.innerHTML = ''
+            clear.style.display = "none";
+            search.style.display = "block"
         })
     })
 }

@@ -21,9 +21,9 @@ const viewNoResults = `
         para que se muestre aquí!"</p>
     </div>
 `;
-function getFavoriteCards() {
+function getFavoriteCards(data) {
     const favoriteContent = document.getElementById('favorite-gifs');
-    const data = JSON.parse(localStorage.getItem('Favorites'))
+    favoriteContent.innerHTML = ''
     let removeMoreResults =document.getElementById('more-results');
     const favoriteGifData = data ? data : false
     if(!favoriteGifData ){
@@ -47,10 +47,34 @@ function getFavoriteCards() {
     )
     
 }
+let results = 24
+function events() {
+    const toggle = e => {
+        const data = JSON.parse(localStorage.getItem('Favorites'))
+        let paginatedItems = data.slice(0, results)
+        getFavoriteCards(paginatedItems);
+        results = results + 12;
+    };
+    const moreResults = document.getElementById('more-results');
+    moreResults.addEventListener("click",toggle)
+    
+};
+function init(){
+    let data = JSON.parse(localStorage.getItem('Favorites'))
+    if(data){
+        let favorites = data.slice(0,12)
+        getFavoriteCards(favorites);
+    }else{
+        const favoriteContent = document.getElementById('favorite-gifs');
+        favoriteContent.innerHTML= viewNoResults
+        favoriteContent.classList.remove('gifs-container');
+    }
+}
 
 function createComponent(container){
     container.innerHTML = viewFavorites;
-    getFavoriteCards();
+    init();
+    events();
     Trendings.createTrendingComponent(trendingContainer);
     document.getElementById('trending-container').style.visibility = "visible";
     

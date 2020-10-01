@@ -24,6 +24,7 @@ const viewNoResults = `
 `;
 async function getFavoriteCards(data) {
     const miGifContent = document.getElementById('mygifos-gifs');
+    miGifContent.innerHTML=''
     let removeMoreResults =document.getElementById('more-results');
     const myGifData = data ? data : false
     if(!myGifData){
@@ -48,26 +49,35 @@ async function getFavoriteCards(data) {
     )
     
 }
-function getMyGifosData() {
-    let dataGif = [];
-    const data = JSON.parse(localStorage.getItem('MyGifs'));
+
+let results = 24
+function events() {
+    const toggle = e => {
+        const data = JSON.parse(localStorage.getItem('MyGifData'));
+        let paginatedItems = data.slice(0, results)
+        getFavoriteCards(paginatedItems);
+        results = results + 12;
+    };
+    const moreResults = document.getElementById('more-results');
+    moreResults.addEventListener("click",toggle)
+    
+};
+function init(){
+    const data = JSON.parse(localStorage.getItem('MyGifData'));
     if(data){
-        data.map(async function(id){
-            let gifid = await Data.getGifById(id);
-            dataGif.push(gifid.data);
-        });
-    }else {
-        dataGif = null
+        let myGifs = data.slice(0,12)
+        getFavoriteCards(myGifs);
+    }else{
+        const miGifContent = document.getElementById('mygifos-gifs');
+        miGifContent.innerHTML = viewNoResults
+        miGifContent.classList.remove('gifs-container');
     }
-    return dataGif
 }
 function createComponent(container) {
     container.innerHTML = viewMyGifs;
-    let data = getMyGifosData();
     Trendings.createTrendingComponent(trendingContainer)
-    setTimeout(()=>{
-        getFavoriteCards(data)
-    },500)
+    init()
+    events()
     
 }
 export default {
