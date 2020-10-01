@@ -1,5 +1,5 @@
 import Data from '../utils/postData.js'
-import getHash from '../utils/getHash.js';
+import DataPost from '../utils/getData.js';
 const viewNewGif = `
 <div class="flex">
 <div class="flex-1 onDesktop film-camara">
@@ -125,6 +125,7 @@ async function uploadGif (file) {
     let postGif = await Data.postGif(file);
     addToLocalStorage('MyGifs',postGif.data.id)
     changetoSuccessAnimation();
+    getMyGifosData();
 }
 function changetoSuccessAnimation(){
     document.getElementById('video-loader').src ="./assets/ok.svg";
@@ -149,6 +150,18 @@ function addToLocalStorage(name,value) {
     existing = existing ? JSON.parse(existing) : [];
     existing.push(value);
     localStorage.setItem(name,JSON.stringify(existing)); 
+}
+function getMyGifosData() {
+    let dataGif = [];
+    const data = JSON.parse(localStorage.getItem('MyGifs'));
+    if(data){
+        data.map(async function(id){
+            let gifid = await DataPost.getGifById(id);
+            dataGif.push(gifid.data);
+            localStorage.setItem('MyGifData',JSON.stringify(dataGif))
+        });
+    }
+    
 }
 function fiveStep() {
     document.getElementById('step2').classList.remove('step--active')

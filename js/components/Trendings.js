@@ -1,6 +1,5 @@
 import Trending from "../utils/getData.js";
-import Card from "../components/Card.js";
-
+import Card from "./Card.js";
 
 function init(){
     const trendingView = `

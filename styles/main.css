@@ -81,6 +81,7 @@ video , .video{
     text-transform: uppercase;
     font-weight: 600;
     text-decoration: none;
+    cursor: pointer;
 }
 .button:hover {
     background-color: var(--purple-gifos);
@@ -172,6 +173,9 @@ video , .video{
 .navigation-list li a.new-gif-link:hover{
     background-color: var(--purple-gifos);
     color: var(--gifos-background);
+}
+.navigation-list li {
+    cursor: pointer;
 }
 .logo-container {
     width: 60px;
@@ -300,6 +304,9 @@ a.home-link {
     outline: none;
     outline-width: 0;
 }
+.fa-close.search-close{
+    display: none;
+}
 .image-container {
     flex: 1;
     display: flex;
@@ -331,6 +338,7 @@ a.home-link {
 }
 .trending-random .trend-suggest {
     display: inline;
+    cursor: pointer;
 }
 .gifs-container {
     grid-template-columns: repeat(2, 1fr);

@@ -1,4 +1,4 @@
-import MaxGif from '../components/Maxgif.js'
+import MaxGif from './Maxgif.js'
 function init(gif){
     const cardView = `
     <div id="${gif.id}" class="gif-card gif-purple-hover">
@@ -26,8 +26,17 @@ function addToLocalStorage(name,value) {
     localStorage.setItem(name,JSON.stringify(existing)); 
 }
 function addtoFavorites(gif) {
-    document.getElementById(`${gif.id}-add`).classList.add('icon-heart--active')
-    addToLocalStorage('Favorites',gif)
+    let heart = document.getElementById(`${gif.id}-add`)
+    if(heart.classList.contains('icon-heart--active')){
+        heart.classList.remove('icon-heart--active')
+        let data = JSON.parse(localStorage.getItem('Favorites'))
+        data.forEach((ítem,index) => ítem.id === gif.id ? data.splice(index,1): null)
+        localStorage.setItem('Favorites',JSON.stringify(data))
+    }else{
+        heart.classList.add('icon-heart--active')
+        addToLocalStorage('Favorites',gif)
+    }
+
 }
 function removeFavorites(gif) {
     let data = JSON.parse(localStorage.getItem('Favorites'))
@@ -37,7 +46,7 @@ function removeFavorites(gif) {
 }
 async function donwloadFavorites(gif){
     let a = document.createElement('a');
-    let response = await fetch(`${gif.images.original.mp4}`);
+    let response = await fetch(`${gif.images.downsized.url}`);
     let file = await response.blob();
     a.download = `${gif.title}`;
     a.href = window.URL.createObjectURL(file);
