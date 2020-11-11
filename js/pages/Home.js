@@ -1,6 +1,7 @@
 import Trendings from '../components/Trendings.js';
 import Search from '../components/Search.js';
 import Data from '../utils/getData.js';
+import Card from '../components/Card.js';
 
 const trendingContainer = null || document.getElementById('trending-container');
 const viewHome = `
@@ -9,6 +10,7 @@ const viewHome = `
                 <div id="header-image-container" class="header-image-container">
                     <img src="./assets/ilustra_header.svg" alt="">
                 </div>
+                <div>${navigator.userAgent}</div>
             </div>
             <div id="search-results" class="gifs-sections">
                 <span>Trending:</span>
